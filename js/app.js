@@ -2,7 +2,7 @@ var bodyWidth = $("body").css("width");
 $("div.items").css("width",(bodyWidth.substring(0,bodyWidth.length-2)-380)+"px");
 
 //参与抽奖人数初始值
-var itemCount= 120;
+var itemCount= 48;
 //跑马灯循环
 var tx;
 var runtx;
@@ -13,7 +13,7 @@ var pause =false;
 //排名分组显示算法已经取消
 //var ts=20
 //默认跑马灯频率
-var pl=50;
+var pl=100;
 //程序是否开始运行用于判断程序是否开始运行
 var isStart=false;
 	
@@ -159,7 +159,7 @@ $("document").ready(function(){
 				var it = $(".item.active").text();
 				//停止跑马灯
 				runingmic.pause();
-				//Math.floor($(".sequence li").size()/ts)
+				//Math.floor($(".sequence li").size()/ts)				
 				
 				//播放中奖音效
 				pausemic.currentTime = 0;
@@ -168,73 +168,103 @@ $("document").ready(function(){
 				//中奖号处理
 				var it=Number(it);
                 var r;
-                var n='很遗憾，什么都没抽中';
-                var j1='一等奖：蒂爵公司提供饰品一件（价值3000元）';
-                var j2='二等奖：蒂爵公司提供饰品一件（价值1000元）';
-                var j3='三等奖：U盘一件';
-                var j4='四等奖：公仔一件';
+                var n='纪念奖： 罚酒一杯';
+                var j1='一等奖：现金大奖3000元！！！';
+                var j2='二等奖：现金奖1000元！！';
+                var j3='三等奖：现金奖800元！';
+                var j4='四等奖：现金奖600元';
+				var j5='五等奖：现金奖300元';
+				var j6='六等奖：现金奖200元';
                 switch(it){
-                    case 28: 
+					case 24: 
                         r=j1;
                         break;
-                    case 35:
-                    case 75:
-                    case 93: 
+                    case 18: 
+					case 28:
                         r=j2;
                         break;
-                    case 36:
-                    case 23:
-                    case 78:
-                    case 25:
-                    case 73:
-                    case 88:
-                    case 44:
-                    case 90:
-                    case 22:
-                    case 98: 
+                    case 8:
+                    case 26:
+                    case 48: 
                         r=j3;
                         break;
-                    case 4:
-                    case 8:
-                    case 12:
-                    case 45:
-                    case 76:
-                    case 83:
-                    case 87:
-                    case 24:
-                    case 99:
-                    case 110:
-                    case 120:
-                    case 85:
-                    case 87:
-                    case 2:
-                    case 5:
-                    case 9:
-                    case 13:
-                    case 111:
-                    case 77:
-                    case 20: 
+					case 6:
+                    case 16:
+                    case 36:
                         r=j4;
+                        break;
+                    case 1:
+                    case 4:
+                    case 7:
+                    case 10:
+                    case 11:
+                    case 12:
+                    case 13:
+                    case 14: 
+                    case 15: 
+					case 17:
+					case 19:
+					case 20:
+					case 21:
+					case 22:
+					case 23:
+					case 27:
+					case 29:
+					case 31:
+					case 32:
+					case 34:
+					case 35:
+					case 38:
+					case 40:
+					case 41:
+					case 44:
+					case 45:
+					case 46:
+					case 47:
+                        r=j5;
+                        break;
+					case 2:
+					case 3:
+					case 5:
+					case 9:
+					case 25:
+					case 30:
+					case 33:
+					case 37:
+					case 39:
+					case 42:
+					case 43:
+						r=j6;
                         break;
                     default:
                         r=n;
                 }
                 $('.ss ol').append('<li data-number='+it+'>'+it+"号："+r+'；</li>');
                 if(r==n){
-                    r='<h3>'+r+'！</h3>';
-                }else{
-                    r='<h2>恭喜您，抽得'+r+'！</h2>';
+                    r='<h4>'+r+'！</h4>';
+                }else if(r==j1){
+					r='<h2>恭喜您，抽得'+r+'！</h2>';
+				}
+				else{
+                    r='<h3>恭喜您，抽得'+r+'！</h3>';
                 }
+				pause=true;
                 var dd = dialog({
                         title: '抽奖结果',
                         content: r,
-                        okValue: '确定'
+						modal:true,
+						okValue: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+						ok:function(){
+						},
+						onclose: function(){
+							pause=false;
+						}
                     });
                 dd.show();
                 localStorage.setItem("sequence",$(".ss").html()); 
 				$(".item.active").addClass("ignore");
 				$(".item.active").pulsate({
-					color: zzs,        //#98ff98
+					color: '#FFB6C1',        //#98ff98
 					repeat: 5
 				});
 			}else{
@@ -281,7 +311,7 @@ $("document").ready(function(){
 	
 	//清除错误中奖号
 	$("body").on("click",".item.ignore",function(){
-		var inputItemCount = prompt("请输入点击的号码来进行删除中奖号码（例如“12”）。");
+		var inputItemCount = prompt("Enter the code you choose to delete");
 		if(inputItemCount == $(this).text()){
 			$("li[data-number="+$(this).text()+"]").remove();
 			$(this).removeClass("ignore");
